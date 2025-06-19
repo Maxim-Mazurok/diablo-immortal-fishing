@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { Graphics } from "pixi.js";
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { onTick } from "vue3-pixi";
 
 const props = defineProps({
@@ -14,6 +14,7 @@ const props = defineProps({
   speed: { type: Number, default: 100 }, // constant leftward speed (px/sec)
   pushVelocity: { type: Number, default: 500 }, // rightward boost speed (px/sec)
   friction: { type: Number, default: 3500 }, // how quickly the boost slows down (px/sec^2)
+  // TODO: probably get rid of friction and push velocity, looks like in the game it just jumps to the right instantly, consider checking screencast, doesn't matter too much tho
 });
 
 const x = ref(props.width);
