@@ -101,7 +101,7 @@ def catch_fish(img):
     [type, action] = result
     print(f"Action: {action}, Type: {type}")
     
-    if fish_type_on_the_line = "unknown" and type != "unknown":
+    if fish_type_on_the_line == "unknown" and type != "unknown":
         fish_type_on_the_line_last_updated = time.time()
         fish_type_on_the_line = type
     
