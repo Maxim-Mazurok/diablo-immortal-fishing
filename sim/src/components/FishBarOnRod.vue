@@ -4,16 +4,15 @@
 
 <script setup lang="ts">
 import { Graphics } from "pixi.js";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, computed } from "vue";
 import { onTick } from "vue3-pixi";
 
 const props = defineProps({
   width: { type: Number, default: 300 },
   height: { type: Number, default: 30 },
   color: { type: Number, default: 0xff0000 },
-  speed: { type: Number, default: 100 }, // constant leftward speed (px/sec)
-  jumpDistance: { type: Number, default: 50 }, // how far to jump right on click
-  barColor: { type: Number, default: 0x00ff00 }, // color for Rod bar
+  speed: { type: Number, default: 110 }, // constant leftward speed (px/sec)
+  jumpDistance: { type: Number, default: 35 }, // how far to jump right on click
   barRatio: { type: Number, default: 0.2 }, // 20% of width
   stopMin: { type: Number, default: 0.5 },
   stopMax: { type: Number, default: 1.5 },
@@ -90,10 +89,15 @@ onTick((delta) => {
   }
 });
 
+// Collision detection: is the line within the bar?
+const isColliding = computed(() => {
+  return x.value >= barX.value && x.value <= barX.value + barWidth;
+});
+
 function drawLine(g: Graphics) {
   g.clear();
-  // Draw Rod bar
-  g.beginFill(props.barColor);
+  // Draw Rod bar, green if colliding, red otherwise
+  g.beginFill(isColliding.value ? 0x00ff00 : 0xff0000);
   g.drawRect(barX.value, 0, barWidth, props.height);
   g.endFill();
   // Draw vertical line
