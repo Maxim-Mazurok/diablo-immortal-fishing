@@ -25,7 +25,7 @@ const handleProgress = (value: number) => {
     />
   </Application>
 
-  <h2>Simulates Fish Movement when on the line, press space</h2>
+  <h2>Simulates Fish Movement when on the line, click/tap anywhere</h2>
   <Application :width="300" :height="30">
     <!-- Simulates Fish Movement when on the line, press space -->
     <FishBar :width="300" :height="30" :color="0xff0000" />

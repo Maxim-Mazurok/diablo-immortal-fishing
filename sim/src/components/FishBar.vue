@@ -12,13 +12,10 @@ const props = defineProps({
   height: { type: Number, default: 30 },
   color: { type: Number, default: 0xff0000 },
   speed: { type: Number, default: 100 }, // constant leftward speed (px/sec)
-  pushVelocity: { type: Number, default: 500 }, // rightward boost speed (px/sec)
-  friction: { type: Number, default: 3500 }, // how quickly the boost slows down (px/sec^2)
-  // TODO: probably get rid of friction and push velocity, looks like in the game it just jumps to the right instantly, consider checking screencast, doesn't matter too much tho
+  jumpDistance: { type: Number, default: 50 }, // how far to jump right on click
 });
 
 const x = ref(props.width);
-const rightwardVelocity = ref(0); // push impulse
 
 onTick((delta) => {
   const dt = delta / 60;
@@ -26,19 +23,9 @@ onTick((delta) => {
   // Move left at constant speed
   x.value -= props.speed * dt;
 
-  // Apply rightward velocity if any
-  if (rightwardVelocity.value > 0) {
-    x.value += rightwardVelocity.value * dt;
-    rightwardVelocity.value = Math.max(
-      rightwardVelocity.value - props.friction * dt,
-      0
-    );
-  }
-
   // Clamp to left bound
   if (x.value < 0) {
     x.value = 0;
-    rightwardVelocity.value = 0;
   }
 });
 
@@ -49,17 +36,15 @@ function drawLine(g: Graphics) {
   g.lineTo(x.value, props.height);
 }
 
-function onKeydown(e: KeyboardEvent) {
-  if (e.code === "Space") {
-    rightwardVelocity.value += props.pushVelocity;
-  }
+function onClick() {
+  x.value = Math.min(x.value + props.jumpDistance, props.width);
 }
 
 onMounted(() => {
-  window.addEventListener("keydown", onKeydown);
+  window.addEventListener("click", onClick);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("keydown", onKeydown);
+  window.removeEventListener("click", onClick);
 });
 </script>
