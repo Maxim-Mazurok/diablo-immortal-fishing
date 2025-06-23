@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Application } from "vue3-pixi";
-import RodBar from "./components/RodBar.vue";
+import FishBars from "./components/FishBars.vue";
 import ProgressBar from "./components/ProgressBar.vue";
+import RodBar from "./components/RodBar.vue";
 
 const progress = ref(0);
 
@@ -29,5 +30,10 @@ const handleProgress = (value: number) => {
   <Application :width="300" :height="30">
     <!-- Simulates Fish Movement when on the line, press space -->
     <RodBar :width="300" :height="30" :color="0xff0000" />
+  </Application>
+
+  <h2>Simulates Fish Bars</h2>
+  <Application :width="300" :height="30">
+    <FishBars :width="300" :height="30" :color="0x0000ff" />
   </Application>
 </template>
