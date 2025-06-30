@@ -41,13 +41,20 @@ def start_fishing_if_needed(img):
     pixel_sum = np.sum(crop)
     # print(f"Pixel color sum for crop: {pixel_sum}")
     
+    # import os
+    # timestamp = time.strftime("%Y%m%d_%H%M%S")
+    # os.makedirs("debug", exist_ok=True)
+    # cv2.imwrite(f"debug/debug_screenshot_{timestamp}.png", crop)
+    # cv2.imwrite(f"debug/debug_screenshot2_{timestamp}.png", img)
+    
     if pixel_sum == 100859:
         print("Starting fishing: pressing 5")
         time.sleep(1) # Wait a bit before pressing the key to avoid "fighting" and going out of the spot
         keyboard.press_and_release('5')
         time.sleep(1)
         return True
-        
+    # else:
+    #     print(f"Not starting fishing, pixel sum does not match expected value: {pixel_sum}")
     return False
 
 def start_catching(img):
@@ -81,9 +88,9 @@ def start_catching(img):
             elif b > 120 and b > r + 20 and b > g + 10:
                 blue_count += 1
 
-    # print(f"Grey pixels: {grey_count}, Blue-ish pixels: {blue_count}")
+    print(f"Grey pixels: {grey_count}, Blue-ish pixels: {blue_count}, Pixel sum: {pixel_sum}")
 
-    if 410000 < pixel_sum < 411000 and grey_count > blue_count:
+    if 410000 < pixel_sum < 420000 and grey_count > blue_count:
         print("Catching fish: pressing space")
         keyboard.press_and_release('space')
 
