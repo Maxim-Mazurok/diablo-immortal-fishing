@@ -113,7 +113,7 @@ def catch_fish(img):
         fish_type_on_the_line = type
     
     if fish_type_on_the_line != "mythic":
-        if (time.time() - last_start_fishing) < 4*60+30:
+        if (time.time() - last_start_fishing) < 4*60+15:
             print(f"Detected {fish_type_on_the_line} fish, ignoring...")
             return
         else:
